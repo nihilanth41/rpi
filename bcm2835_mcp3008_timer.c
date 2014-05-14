@@ -11,6 +11,7 @@
 int bcm_spi_init();
 int readadc(int);
 int sample_adc(int); //use oversampling/decimation technique for increased resolution
+int get_average(int[], int); //take an int array and it's size and return the average of all elements
 
 //struct to hold the adc result and the value at in the timer register
 typedef struct {
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
 		{ 	
 			//for ADC_MAX times
 			//take adc value and store it in struct adcbuf[i].adc[j]
-			adcbuf[i].adc[j] = readadc(j);
+			adcbuf[i].adc[j] = sample_adc(j);
 			//store current value of timer register in struct
 			adcbuf[i].timer_uS[j] = bcm2835_st_read();
 			//store difference between timer values in struct
